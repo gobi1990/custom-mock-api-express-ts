@@ -21,3 +21,9 @@ pids
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+
+# Ignore environment variables
+.env
+.env.local
+.env.development
+.env.production

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PromotionResponse } from '../interfaces/PromotionResponse';
+import { supabase } from '../config/supabase';
 
 export const getPromotions = (req: Request, res: Response<PromotionResponse>) => {
   res.json({
@@ -40,3 +41,18 @@ export const getPromotions = (req: Request, res: Response<PromotionResponse>) =>
     },
   });
 };
+
+
+export const getSupabasePromotions = async (req: Request, res: Response) => {
+    try {
+      const { data, error } = await supabase.from('promotions').select('*');
+  
+      if (error) {
+        throw error;
+      }
+  
+      res.json({ status: 'success', data: { promotions: data } });
+    } catch (error) {
+      res.status(500).json({ status: 'error', message: 'Failed to fetch promotions', error });
+    }
+  };
