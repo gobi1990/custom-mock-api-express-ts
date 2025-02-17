@@ -1,7 +1,7 @@
 import express from 'express';
 
 import MessageResponse from '../interfaces/MessageResponse';
-import emojis from './coffeeShop';
+import coffeeshop from './coffeeShop';
 
 const router = express.Router();
 
@@ -11,6 +11,6 @@ router.get<{}, MessageResponse>('/', (req, res) => {
   });
 });
 
-router.use('/coffeeshop/', emojis);
+router.use('/coffeeshop/', coffeeshop);
 
 export default router;
