@@ -5,8 +5,21 @@ import { supabase } from '../config/supabase';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET';
 
+const validateRegisterAdmin = (body: any) => {
+    const { name, email, password, role } = body;
+    if (!name || !email || !password || !role) {
+        return 'All fields (name, email, password, role) are required';
+    }
+    return null;
+};
+
 export const registerAdmin = async (req: Request, res: Response) => {
     try {
+        const validationError = validateRegisterAdmin(req.body);
+        if (validationError) {
+            return res.status(400).json({ error: validationError });
+        }
+
         const { name, email, password, role } = req.body;
 
         if (!name || !email || !password || !role) {
