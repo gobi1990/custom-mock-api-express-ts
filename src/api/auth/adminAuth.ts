@@ -12,6 +12,6 @@ router.get<{}, MessageResponse>('/', (req, res) => {
 });
 
 router.post('/register', registerAdmin);
-router.post('/login', authenticateToken, loginAdmin);
+router.post('/login', loginAdmin);
 
 export default router;
