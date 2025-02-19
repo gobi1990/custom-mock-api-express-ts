@@ -89,10 +89,22 @@ export const loginAdmin = async (req: Request, res: Response) => {
         });
 
         // Update token in Supabase
-        await supabase
-            .from(process.env.ADMIN_USERS_TABLE || 'adminUsers')
-            .update({ token })
-            .eq('id', user.id);
+        const { error: tokenError } = await supabase
+        .from(process.env.USER_TOKENS_TABLE || 'usertokens')
+            .upsert(
+                [
+                    {
+                        user_id: user.id,
+                        token,
+                        created_at: new Date().toISOString() 
+                    }
+                ],
+                { onConflict: 'user_id' } 
+            );
+
+        if (tokenError) {
+            return res.status(500).json({ error: 'Failed to store token', details: tokenError.message });
+        }
 
         res.json({ message: 'Login successful', user: { id: user.id, email: user.email, role: user.role }, token });
     } catch (error) {
