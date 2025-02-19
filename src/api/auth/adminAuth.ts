@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateToken } from '../../middlewares';
+import { authenticateToken, checkApiKey } from '../../middlewares';
 import { registerAdmin, loginAdmin } from '../../controllers/adminAuthController';
 import MessageResponse from '../../interfaces/MessageResponse';
 
@@ -11,7 +11,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
   });
 });
 
-router.post('/register', registerAdmin);
-router.post('/login', loginAdmin);
+router.post('/register', checkApiKey, registerAdmin);
+router.post('/login', checkApiKey,  loginAdmin);
 
 export default router;

@@ -18,6 +18,16 @@ export function notFound(req: Request, res: Response, next: NextFunction) {
   next(error);
 }
 
+export const checkApiKey = (req: Request, res: Response, next: NextFunction) => {
+  const apiKey = req.headers['x-api-key']; 
+
+  if (!apiKey || apiKey !== process.env.API_SECRET_KEY) {
+      return res.status(403).json({ error: 'Unauthorized access: Invalid API Key' });
+  }
+
+  next(); 
+};
+
 export const authenticateToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const token = req.header('Authorization')?.split(' ')[1]; // "Bearer <token>"
 
