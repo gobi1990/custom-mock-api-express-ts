@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateToken, checkApiKey } from '../../middlewares';
+import { authenticateToken, checkApiKey } from '../../middlewares/auth';
 import { registerAdmin, loginAdmin } from '../../controllers/adminAuthController';
 import MessageResponse from '../../interfaces/MessageResponse';
 
